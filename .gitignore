@@ -1,12 +1,12 @@
-##파일무시
-test.tct
+##파일무시##
+
 ~$로고.pptx
 ~$코딩인력사무소_오아시스해커톤_ppt.pptx
 
-##확장자 무시
+##확장자 무시##
 *.zip
 
-##폴더 무시
+##폴더 무시##
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
