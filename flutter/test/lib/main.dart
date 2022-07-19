@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -112,6 +113,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(CupertinoIcons.back,
+              color: Color.fromARGB(255, 255, 255, 255)),
+          onPressed: () {},
+        ),
         title: Image.asset(
           'assets/logolb.png',
           height: 80,
@@ -167,47 +173,6 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class SelectImg extends StatelessWidget {
-  // 일단 보류
-  const SelectImg({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final List<String> images = [
-      "https://cdn2.thecatapi.com/images/bi.jpg",
-      "https://cdn2.thecatapi.com/images/63g.jpg",
-    ];
-    return Scaffold(
-        appBar: AppBar(
-          title: Image.asset(
-            'assets/logolb.png',
-            height: 80,
-          ),
-          centerTitle: true,
-          backgroundColor: Color.fromARGB(255, 149, 191, 233),
-          actions: [
-            // 삭제 버튼
-            IconButton(
-              onPressed: () {
-                // SharedPreferences에 저장된 모든 데이터 삭제
-                prefs.clear();
-              },
-              icon: Icon(Icons.delete),
-            )
-          ],
-        ),
-        body: ListView.builder(
-          itemCount: images.length,
-          itemBuilder: (context, index) {
-            String image = images[index];
-            return Feed(
-              imageUrl: image,
-            );
-          },
-        ));
-  }
-}
-
 class AfterLogin extends StatelessWidget {
   // 네번째 페이지
   const AfterLogin({Key? key}) : super(key: key);
@@ -216,6 +181,11 @@ class AfterLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(CupertinoIcons.back,
+              color: Color.fromARGB(255, 255, 255, 255)),
+          onPressed: () {},
+        ),
         title: Image.asset(
           'assets/logolb.png',
           height: 80,
@@ -256,7 +226,7 @@ class AfterLogin extends StatelessWidget {
                       onPressed: () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => SelectImg()),
+                          MaterialPageRoute(builder: (context) => FivePage()),
                         );
                       },
                       child: Text(
@@ -319,5 +289,355 @@ class AfterLogin extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class FivePage extends StatelessWidget {
+  // 다섯번째 페이지
+  const FivePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(CupertinoIcons.back,
+                color: Color.fromARGB(255, 255, 255, 255)),
+            onPressed: () {},
+          ),
+          title: Image.asset(
+            'assets/logolb.png',
+            height: 80,
+          ),
+          centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 149, 191, 233),
+          actions: [
+            // 삭제 버튼
+            IconButton(
+              onPressed: () {
+                // SharedPreferences에 저장된 모든 데이터 삭제
+                prefs.clear();
+              },
+              icon: Icon(Icons.delete),
+            )
+          ],
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                "동물의 종류를 맞춰보세요 !",
+                style: TextStyle(fontSize: 35),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/0.jpg'),
+            ),
+            Row(
+              children: [
+                Container(
+                  margin:
+                      EdgeInsets.only(top: 50, bottom: 15, right: 15, left: 30),
+                  width: 170,
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => SixPage()),
+                      );
+                    },
+                    child: Text(
+                      '고양이',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 50,
+                    bottom: 15,
+                  ),
+                  width: 170,
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => SixPage()),
+                      );
+                    },
+                    child: Text(
+                      '강아지',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ));
+  }
+}
+
+class SixPage extends StatelessWidget {
+  // 여섯번째 페이지
+  const SixPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(CupertinoIcons.back,
+                color: Color.fromARGB(255, 255, 255, 255)),
+            onPressed: () {},
+          ),
+          title: Image.asset(
+            'assets/logolb.png',
+            height: 80,
+          ),
+          centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 149, 191, 233),
+          actions: [
+            // 삭제 버튼
+            IconButton(
+              onPressed: () {
+                // SharedPreferences에 저장된 모든 데이터 삭제
+                prefs.clear();
+              },
+              icon: Icon(Icons.delete),
+            )
+          ],
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                "동물의 종류를 맞춰보세요 !",
+                style: TextStyle(fontSize: 35),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/1.jpg'),
+            ),
+            Row(
+              children: [
+                Container(
+                  margin:
+                      EdgeInsets.only(top: 50, bottom: 15, right: 15, left: 30),
+                  width: 170,
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => SevenPage()),
+                      );
+                    },
+                    child: Text(
+                      '고양이',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 50,
+                    bottom: 15,
+                  ),
+                  width: 170,
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => SevenPage()),
+                      );
+                    },
+                    child: Text(
+                      '강아지',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ));
+  }
+}
+
+class SevenPage extends StatelessWidget {
+  // 일곱번째 페이지
+  const SevenPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(CupertinoIcons.back,
+                color: Color.fromARGB(255, 255, 255, 255)),
+            onPressed: () {},
+          ),
+          title: Image.asset(
+            'assets/logolb.png',
+            height: 80,
+          ),
+          centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 149, 191, 233),
+          actions: [
+            // 삭제 버튼
+            IconButton(
+              onPressed: () {
+                // SharedPreferences에 저장된 모든 데이터 삭제
+                prefs.clear();
+              },
+              icon: Icon(Icons.delete),
+            )
+          ],
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                "동물의 종류를 맞춰보세요 !",
+                style: TextStyle(fontSize: 35),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/149.jpg'),
+            ),
+            Row(
+              children: [
+                Container(
+                  margin:
+                      EdgeInsets.only(top: 50, bottom: 15, right: 15, left: 30),
+                  width: 170,
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => EightPage()),
+                      );
+                    },
+                    child: Text(
+                      '고양이',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 50,
+                    bottom: 15,
+                  ),
+                  width: 170,
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => EightPage()),
+                      );
+                    },
+                    child: Text(
+                      '강아지',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ));
+  }
+}
+
+class EightPage extends StatelessWidget {
+  // 여덟번째 페이지
+  const EightPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(CupertinoIcons.back,
+                color: Color.fromARGB(255, 255, 255, 255)),
+            onPressed: () {},
+          ),
+          title: Image.asset(
+            'assets/logolb.png',
+            height: 80,
+          ),
+          centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 149, 191, 233),
+          actions: [
+            // 삭제 버튼
+            IconButton(
+              onPressed: () {
+                // SharedPreferences에 저장된 모든 데이터 삭제
+                prefs.clear();
+              },
+              icon: Icon(Icons.delete),
+            )
+          ],
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                "동물의 종류를 맞춰보세요 !",
+                style: TextStyle(fontSize: 35),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/150.jpg'),
+            ),
+            Row(
+              children: [
+                Container(
+                  margin:
+                      EdgeInsets.only(top: 50, bottom: 15, right: 15, left: 30),
+                  width: 170,
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      '고양이',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 50,
+                    bottom: 15,
+                  ),
+                  width: 170,
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      '강아지',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ));
   }
 }
