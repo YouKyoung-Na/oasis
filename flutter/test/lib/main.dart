@@ -1,9 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'auth_service.dart';
 import 'fee.dart';
 
 // SharedPreferences 인스턴스를 어디서든 접근 가능하도록 전역 변수로 선언
@@ -12,6 +15,7 @@ late SharedPreferences prefs;
 void main() async {
   // main() 함수에서 async를 쓰려면 필요
   WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(); // firebase 앱 시작
 
   // shared_preferences 인스턴스 생성
   prefs = await SharedPreferences.getInstance();
@@ -26,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // SharedPreferences에서 온보딩 완료 여부 조회
     // isOnboarded에 해당하는 값어서 null을 반환하는 경우 false 할당
-    bool isOnboarded = prefs.getBool("isOnboarded") ?? false;
+    bool isOnboarded = false;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -92,7 +96,7 @@ class OnboardingPage extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
         onDone: () {
           // Done 클릭시 isOnboarded = true로 저장
-          prefs.setBool("isOnboarded", true);
+          //prefs.setBool("isOnboarded", true);
 
           // Done 클릭시 페이지 이동
           Navigator.pushReplacement(
@@ -129,7 +133,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             onPressed: () {
               // SharedPreferences에 저장된 모든 데이터 삭제
-              prefs.clear();
+              //prefs.clear();
             },
             icon: Icon(Icons.delete),
           )
@@ -197,7 +201,7 @@ class AfterLogin extends StatelessWidget {
           IconButton(
             onPressed: () {
               // SharedPreferences에 저장된 모든 데이터 삭제
-              prefs.clear();
+              //prefs.clear();
             },
             icon: Icon(Icons.delete),
           )
@@ -240,7 +244,7 @@ class AfterLogin extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Text(
-                  "분류 카테고리",
+                  "쉬운 난이도",
                   style: TextStyle(fontSize: 20),
                 ),
               ),
@@ -284,6 +288,107 @@ class AfterLogin extends StatelessWidget {
                   )
                 ],
               ),
+              Row(
+                children: [
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Image.asset(
+                        "assets/wheat-1556698_640.jpg",
+                        width: 180,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Image.asset(
+                          "assets/fish-3322230_640.jpg",
+                          width: 180,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    "농업",
+                    style: TextStyle(fontSize: 17),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 170),
+                    child: Text(
+                      "수산업",
+                      style: TextStyle(fontSize: 17),
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Text(
+                  "어려운 난이도",
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              Stack(
+                alignment: Alignment.bottomLeft,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Image.asset(
+                            "assets/south-korea-5901194_640.png",
+                            width: 180,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: 200,
+                    height: 50,
+                    child: TextButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(255, 255, 255, 255),
+                        onSurface: Color.fromARGB(
+                            255, 255, 255, 255), // Background color
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => NinePage()),
+                        );
+                      },
+                      child: Text(
+                        '',
+                        style: TextStyle(fontSize: 22),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    "사투리",
+                    style: TextStyle(fontSize: 17),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 170),
+                    child: Text(
+                      "",
+                      style: TextStyle(fontSize: 17),
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
         ),
@@ -316,7 +421,7 @@ class FivePage extends StatelessWidget {
             IconButton(
               onPressed: () {
                 // SharedPreferences에 저장된 모든 데이터 삭제
-                prefs.clear();
+                //prefs.clear();
               },
               icon: Icon(Icons.delete),
             )
@@ -324,6 +429,55 @@ class FivePage extends StatelessWidget {
         ),
         body: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 0),
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      top: 0,
+                      bottom: 15,
+                    ),
+                    width: 190,
+                    height: 80,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(
+                            255, 255, 255, 255), // Background color
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        '쉬운 난이도',
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Color.fromARGB(255, 149, 191, 233)),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 0,
+                    bottom: 15,
+                  ),
+                  width: 190,
+                  height: 80,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(
+                          255, 255, 255, 255), // Background color
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      '어려운 난이도',
+                      style: TextStyle(
+                          fontSize: 22, color: Color.fromARGB(255, 0, 0, 0)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
@@ -406,7 +560,7 @@ class SixPage extends StatelessWidget {
             IconButton(
               onPressed: () {
                 // SharedPreferences에 저장된 모든 데이터 삭제
-                prefs.clear();
+                //prefs.clear();
               },
               icon: Icon(Icons.delete),
             )
@@ -414,6 +568,55 @@ class SixPage extends StatelessWidget {
         ),
         body: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 0),
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      top: 0,
+                      bottom: 15,
+                    ),
+                    width: 190,
+                    height: 80,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(
+                            255, 255, 255, 255), // Background color
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        '쉬운 난이도',
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Color.fromARGB(255, 149, 191, 233)),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 0,
+                    bottom: 15,
+                  ),
+                  width: 190,
+                  height: 80,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(
+                          255, 255, 255, 255), // Background color
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      '어려운 난이도',
+                      style: TextStyle(
+                          fontSize: 22, color: Color.fromARGB(255, 0, 0, 0)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
@@ -496,7 +699,7 @@ class SevenPage extends StatelessWidget {
             IconButton(
               onPressed: () {
                 // SharedPreferences에 저장된 모든 데이터 삭제
-                prefs.clear();
+                //prefs.clear();
               },
               icon: Icon(Icons.delete),
             )
@@ -504,6 +707,55 @@ class SevenPage extends StatelessWidget {
         ),
         body: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 0),
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      top: 0,
+                      bottom: 15,
+                    ),
+                    width: 190,
+                    height: 80,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(
+                            255, 255, 255, 255), // Background color
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        '쉬운 난이도',
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Color.fromARGB(255, 149, 191, 233)),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 0,
+                    bottom: 15,
+                  ),
+                  width: 190,
+                  height: 80,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(
+                          255, 255, 255, 255), // Background color
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      '어려운 난이도',
+                      style: TextStyle(
+                          fontSize: 22, color: Color.fromARGB(255, 0, 0, 0)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
@@ -523,12 +775,7 @@ class SevenPage extends StatelessWidget {
                   width: 170,
                   height: 100,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => EightPage()),
-                      );
-                    },
+                    onPressed: () {},
                     child: Text(
                       '고양이',
                       style: TextStyle(fontSize: 22),
@@ -573,7 +820,12 @@ class EightPage extends StatelessWidget {
           leading: IconButton(
             icon: Icon(CupertinoIcons.back,
                 color: Color.fromARGB(255, 255, 255, 255)),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => AfterLogin()),
+              );
+            },
           ),
           title: Image.asset(
             'assets/logolb.png',
@@ -586,7 +838,7 @@ class EightPage extends StatelessWidget {
             IconButton(
               onPressed: () {
                 // SharedPreferences에 저장된 모든 데이터 삭제
-                prefs.clear();
+                //prefs.clear();
               },
               icon: Icon(Icons.delete),
             )
@@ -594,6 +846,55 @@ class EightPage extends StatelessWidget {
         ),
         body: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 0),
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      top: 0,
+                      bottom: 15,
+                    ),
+                    width: 190,
+                    height: 80,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(
+                            255, 255, 255, 255), // Background color
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        '쉬운 난이도',
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Color.fromARGB(255, 149, 191, 233)),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 0,
+                    bottom: 15,
+                  ),
+                  width: 190,
+                  height: 80,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(
+                          255, 255, 255, 255), // Background color
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      '어려운 난이도',
+                      style: TextStyle(
+                          fontSize: 22, color: Color.fromARGB(255, 0, 0, 0)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
@@ -635,6 +936,122 @@ class EightPage extends StatelessWidget {
                     ),
                   ),
                 ),
+              ],
+            )
+          ],
+        ));
+  }
+}
+
+class NinePage extends StatelessWidget {
+  // 아홉번째 페이지
+  const NinePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(CupertinoIcons.back,
+                color: Color.fromARGB(255, 255, 255, 255)),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => AfterLogin()),
+              );
+            },
+          ),
+          title: Image.asset(
+            'assets/logolb.png',
+            height: 80,
+          ),
+          centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 149, 191, 233),
+          actions: [
+            // 삭제 버튼
+            IconButton(
+              onPressed: () {
+                // SharedPreferences에 저장된 모든 데이터 삭제
+                //prefs.clear();
+              },
+              icon: Icon(Icons.delete),
+            )
+          ],
+        ),
+        body: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 0),
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      top: 0,
+                      bottom: 15,
+                    ),
+                    width: 190,
+                    height: 80,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(
+                            255, 255, 255, 255), // Background color
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        '쉬운 난이도',
+                        style: TextStyle(
+                            fontSize: 22, color: Color.fromARGB(255, 0, 0, 0)),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 0,
+                    bottom: 15,
+                  ),
+                  width: 190,
+                  height: 80,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(
+                          255, 255, 255, 255), // Background color
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      '어려운 난이도',
+                      style: TextStyle(
+                          fontSize: 22,
+                          color: Color.fromARGB(255, 149, 191, 233)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                "다음을 사투리로 읽어주세요 !",
+                style: TextStyle(fontSize: 35),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/cut-1297554_640.png'),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    margin: EdgeInsets.only(
+                      top: 50,
+                      bottom: 15,
+                    ),
+                    width: 170,
+                    height: 100,
+                    child: Icon(Icons.mic,
+                        color: Color.fromARGB(255, 149, 191, 233), size: 150)),
               ],
             )
           ],
